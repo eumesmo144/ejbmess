@@ -26,7 +26,6 @@ public class UsuarioService {
         Usuario novoUsuario = new Usuario(id, nome);
         usuarioDao.inserir(novoUsuario);
 
-        Mensagem mensagem = new Mensagem();
 //        mensagemDao.inserir(mensagem);
         if (id==3L) {
             throw new RuntimeException("Menor de idade não permitido!");
@@ -34,5 +33,21 @@ public class UsuarioService {
         if (id == 4L) {
             novoUsuario.setNome(nome + " alterado");
         }
+    }
+
+    public void inserirMensagem(String mensagem){
+        for (String palavra : mensagem.split(" ")) {
+            if (palavra.length() > 10 ) {
+                String message = String.format("Você escreveu o seguinte palavrão: %s \n", palavra);
+                throw new RuntimeException(message +"Escreva palavras com até  10 caracteres");
+            }
+        }
+        Mensagem novaMensagem = new Mensagem();
+        novaMensagem.setMensagem(mensagem);
+
+    }
+
+    public List<Mensagem> listarMensagens() {
+        return mensagemDao.listar();
     }
 }
